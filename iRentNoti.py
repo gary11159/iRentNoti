@@ -6,9 +6,9 @@ import sched
 s = sched.scheduler(time.time, time.sleep)
 requests.packages.urllib3.disable_warnings()
 
-now_lat = 25.013965437237
-now_long = 121.4624659717
-radius = 1
+now_lat = 25.04140540401373
+now_long =  121.55178856104612
+radius = 0.4
 
 dataiRent = {
 	"Latitude": now_lat,
@@ -62,13 +62,18 @@ def run():
     data = data['Data']['AnyRentObj']
     if len(data) > 0 :
         print('有車囉')
-        send_notice('notify', "附近" + str(radius) + "公里內有車囉")
+        sent_message = "附近" + str(radius) + "公里內有車囉，有以下車號:" + "\n"
+        for car in data:
+            sent_message += car['CarNo'] + "\n"
+        send_notice('notify', sent_message)
     else :
         s.enter(10, 0, run)
 
 # 每10秒定時器
 s.enter(10, 0, run)
 s.run()
+
+run()
 
     
     

@@ -3,12 +3,13 @@ import requests
 import json
 import time
 import sched
+import reserve
 s = sched.scheduler(time.time, time.sleep)
 requests.packages.urllib3.disable_warnings()
 
-now_lat = 25.04140540401373
-now_long =  121.55178856104612
-radius = 0.4
+now_lat = 25.046699
+now_long = 121.582297
+radius = 0.5
 
 dataiRent = {
 	"Latitude": now_lat,
@@ -66,6 +67,8 @@ def run():
         for car in data:
             sent_message += car['CarNo'] + "\n"
         send_notice('notify', sent_message)
+        # 自動預約
+        reserve.init(data[0]['CarNo'])
     else :
         s.enter(10, 0, run)
 

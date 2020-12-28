@@ -6,10 +6,10 @@ import sched
 s = sched.scheduler(time.time, time.sleep)
 requests.packages.urllib3.disable_warnings()
 
-carNo = "RCR-6907"
-orderNo = "H7212876"
+carNo = ""
+orderNo = ""
 tryTime = 0
-authorToken = "8BEBA1F1EC009D2F011375E2316C245D9064151F94BF1D6767CCD50108E73185"
+authorToken = "17808F654BDC707405C44EEFA7AF1A33A4ED639811BEDD459EF26BEE46FFBABA"
 
 reserveCarInfo = {
 	"CarNo": carNo,
@@ -33,6 +33,12 @@ header = {
     "pragma": "no-cache",
     "cache-control": "no-cache"
 }
+
+def init(val):
+    global carNo
+    carNo = val
+    reserveCarInfo['carNo'] = carNo
+    reserve()
 
 def send_notice(event_name, value1):  # 以下通知IFTTT設定
     key = 'drnDqtzIelml7xzdgqNAlA'

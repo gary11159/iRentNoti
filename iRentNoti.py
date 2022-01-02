@@ -61,6 +61,8 @@ def run():
     r = requests.post('https://irentcar-app.azurefd.net/api/AnyRent', json=dataiRent, headers=header, verify=False)
     data = json.loads(r.text)
     data = data['Data']['AnyRentObj']
+    # 車牌由大到小排序
+    data = sorted(data, key = lambda s: s['CarNo'], reverse = True)
     if len(data) > 0 :
         print('有車囉')
         sent_message = "附近" + str(radius) + "公里內有車囉，有以下車號:" + "\n"
